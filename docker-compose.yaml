@@ -1,0 +1,105 @@
+version: '3.8'
+services:
+  valheim-server:
+    image: 'docker.io/lloesche/valheim-server:latest'
+    container_name: 'valheim-server'
+    hostname: 'valheim-server'
+    ports:
+      - '2456:2456/udp'
+      - '2457:2457/udp'
+    cap_add:
+      - 'sys_nice'
+    volumes:
+      - './files/saves:/config' # save files
+      - '/usr/local/lib/docker-valheim-server:/opt/valheim' # server files
+      # - './files/valheimplus:/config/valheimplus' # Valheim+ config
+    environment:
+      SERVER_NAME: '${VALHEIM_SERVER_NAME}'
+      WORLD_NAME: '${VALHEIM_SERVER_WORLD_NAME}'
+      SERVER_PASS: '${VALHEIM_SERVER_PASSWORD}' # minimum of 5 chars
+
+      # BEPINEX: 'true'
+      VALHEIM_PLUS: 'true'
+
+      VPCFG_Server_enabled: 'true'
+      VPCFG_Server_enforceMod: 'true'
+      VPCFG_Server_serverSyncsConfig: 'true'
+
+      VPCFG_ValheimPlus_mainMenuLogo: 'false'
+      VPCFG_ValheimPlus_serverBrowserAdvertisement: 'false'
+
+      VPCFG_Building_enabled: 'true'
+      VPCFG_Building_alwaysDropResources: 'true'
+      VPCFG_Building_alwaysDropExcludedResources: 'false'
+      VPCFG_Building_enableAreaRepair: 'true'
+
+      VPCFG_Hud_enabled: 'true'
+      VPCFG_Hud_showRequiredItems: 'true'
+      VPCFG_Hud_displayBowAmmoCounts: '1'
+
+      VPCFG_Map_enabled: 'true'
+      VPCFG_Map_shareMapProgression: 'true'
+      VPCFG_Map_preventPlayerFromTurningOffPublicPosition: 'true'
+      VPCFG_Map_shareAllPins: 'true'
+      VPCFG_Map_displayCartsAndBoats: 'true'
+
+      VPCFG_Ward_enabled: 'true'
+      VPCFG_Ward_wardRange: '50'
+
+      VPCFG_Player_enabled: 'true'
+      # VPCFG_Player_autoRepair: 'true'
+      VPCFG_Player_autoEquipShield: 'true'
+      VPCFG_Player_autoUnequipShield: 'true'
+      VPCFG_Player_queueWeaponChanges: 'true'
+      VPCFG_Player_reequipItemsAfterSwimming: 'true'
+      VPCFG_Player_mergeWithExistingStacks: 'true'
+      VPCFG_Player_cropNotifier: 'true'
+      VPCFG_Player_deathPenaltyMultiplier: '-99'
+      # VPCFG_Player_skipIntro: 'true'
+
+      VPCFG_Inventory_enabled: 'true'
+      VPCFG_Inventory_woodChestRows: '3'
+      VPCFG_Inventory_mergeWithExistingStacks: 'true'
+
+      VPCFG_Workbench_enabled: 'true'
+      VPCFG_Workbench_workbenchRange: '30'
+
+      VPCFG_Beehive_enabled: 'true'
+      VPCFG_Beehive_autoDeposit: 'true'
+      VPCFG_Beehive_showDuration: 'true'
+
+      VPCFG_Fermenter_enabled: 'true'
+      VPCFG_Fermenter_showDuration: 'true'
+      VPCFG_Fermenter_autoFuel: 'true'
+      VPCFG_Fermenter_autoDeposit: 'true'
+
+      VPCFG_Furnace_enabled: 'true'
+      VPCFG_Furnace_autoFuel: 'true'
+      VPCFG_Furnace_autoDeposit: 'true'
+
+      VPCFG_FireSource_enabled: 'true'
+      VPCFG_FireSource_torches: 'true'
+
+      VPCFG_Items_enabled: 'true'
+      VPCFG_Items_noTeleportPrevention: 'true'
+      VPCFG_Items_itemsFloatInWater: 'true'
+
+      # VPCFG_Brightness_enabled: 'true'
+      # VPCFG_Brightness_nightBrightnessMultiplier: '3'
+
+      VPCFG_FirstPerson_enabled: 'true'
+      VPCFG_FirstPerson_defaultFOV: '95.0'
+
+      VPCFG_GameClock_enabled: 'true'
+      VPCFG_Hotkeys_enabled: 'true'
+      VPCFG_GridAlignment_enabled: 'true'
+      VPCFG_Chat_forcedCase: 'false'
+
+      STATUS_HTTP: 'true'
+
+      PUID: '${USER_ID}'
+      PGID: '${GROUP_ID}'
+      TZ: '${TIMEZONE}'
+    healthcheck:
+      test: 'curl --fail --silent http://localhost:80/status.json || exit 1'
+    restart: 'unless-stopped'
