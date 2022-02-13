@@ -24,6 +24,7 @@ services:
       VPCFG_Server_enabled: 'true'
       VPCFG_Server_enforceMod: 'true'
       VPCFG_Server_serverSyncsConfig: 'true'
+      VPCFG_Server_serverSyncHotkeys: 'true'
 
       VPCFG_ValheimPlus_mainMenuLogo: 'false'
       VPCFG_ValheimPlus_serverBrowserAdvertisement: 'false'
@@ -87,11 +88,14 @@ services:
       # VPCFG_Brightness_enabled: 'true'
       # VPCFG_Brightness_nightBrightnessMultiplier: '3'
 
+      VPCFG_Hotkeys_enabled: 'true'
+      VPCFG_Hotkeys_rollForwards: 'T'
+      VPCFG_Hotkeys_rollBackwards: 'Y'
+
       VPCFG_FirstPerson_enabled: 'true'
+      VPCFG_FirstPerson_hotkey: 'F4'
       VPCFG_FirstPerson_defaultFOV: '95.0'
 
-      VPCFG_GameClock_enabled: 'true'
-      VPCFG_Hotkeys_enabled: 'true'
       VPCFG_GridAlignment_enabled: 'true'
       VPCFG_Chat_forcedCase: 'false'
 
